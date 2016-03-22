@@ -12,10 +12,10 @@ no if $] >= 5.017011, warnings => 'experimental::smartmatch';
 #$target_rpm_insight_folder = '/home/xji/Source_Code_Audit/rpm_insight_target';
 #$source_rpm_insight_folder = '/home/xji/Source_Code_Audit/rpm_insight';
 
-$source_rpm_insight_folder =  '/home/xji/Source_Code_Audit/src_rpm';
-$target_rpm_insight_folder = '/home/xji/Source_Code_Audit/src_rpm_folder';
+$source_rpm_insight_folder =  '/home/xji/mount_point/Source_Code_Audit/src_rpm';
+$target_rpm_insight_folder = '/home/xji/mount_point/Source_Code_Audit/src_rpm_folder';
 
-$serialized_file = '/home/xji/Source_Code_Audit/serizlized_rpm_to_srcrpm.lorui';
+$serialized_file = '/home/xji/mount_point/Source_Code_Audit/serizlized_rpm_to_srcrpm.lorui';
 
 @obs_projects = ("applications", "security_app", "mw", "hw", "hw-spreadtrum", "hw-spreadtrum-orchid", "mer-override", "mer-override-nonqt", "skytree-core");
 
