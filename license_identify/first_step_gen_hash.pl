@@ -31,8 +31,9 @@ sub go_through_src_rpms{
 	die "Cannot create directory '$target_srcrpm_folder': $error";
     }
     
-    #go through the source folder
+    #Go through the source folder
     opendir my $dh, $source_rpm_insight_folder or die "Can not open $source_rpm_insight_folder: $!";
+    
     foreach $file(readdir $dh) {
 	$_ = $file;
 	if(/\.src\.rpm/){
