@@ -9,6 +9,7 @@ use Data::Dumper;
 use Storable;
 
 ##This script loads a file list and remove them from exist scanning folder
+$filter_list_file="../file_list/filter_list";
 $tailor_list_file = "/home/xji/mount_point/Source_Code_Audit/tailor_list.txt";
 $csip_rpm_folder =  '/home/xji/mount_point/Source_Code_Audit/csip_folder';
 $tailor_folder =  '/home/xji/mount_point/Source_Code_Audit/tailoring';
@@ -108,6 +109,41 @@ sub remove_non_scan_file{
     }
 }
 
-&move_tailored_file
+sub move_filtered_file{
+    
+    open my $info, $filter_list_file or die "Could not open $filter_list_file: $!";
+    
+    while( my $line = <$info>)  {
+	chomp($line);
+	
+	$matched_file=`cd $csip_rpm_folder; file $line*`;
+	$space_index = index($matched_file," ");
+	$file_type = substr($matched_file, $space_index, length($matched_file));
+	$file_name = substr($matched_file, 0 , $space_index-1);
+	
+	chomp($file_type);
+	#print "the file type is |$file_type| \n ";
+	#print "the file name is $file_name \n";
+	
+	if( $file_type eq " directory"){	
+	    
+	    print "cached a new directory:  $file_name \n";	
+	    system("mv $csip_rpm_folder/$file_name $tailor_folder");
+	}
+	
+	
+    }
+}
+#--fileterd file include: GPL package, unmodified package 
+&move_filtered_file
+
+#--the majority of tailored files are large scale opensource package  
+#&move_tailored_file
+
+#--extract all the tar archive in csip folder
+#--remove src.rpm file in csip folder
 #&extract_file
+
+
+#--remove the picture and another file which are not going to be scanned
 #&remove_non_scan_file
