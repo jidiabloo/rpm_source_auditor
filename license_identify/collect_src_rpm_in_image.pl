@@ -22,7 +22,7 @@ sub get_pure_rpm_name{
     my $reg_exp = "\-[0-9].*\-[0-9]";
     
     my @result_strs = split /\-[0-9].*\-[0-9]/, $rpm_file;
-    #print(" ---- $result_strs[0] \n");
+    
     return $result_strs[0];
 }
 

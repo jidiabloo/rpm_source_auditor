@@ -43,7 +43,7 @@ sub go_through_rpm_list{
 	    }
 
 	    if(-d "$source_rpm_folder/$result_file"){
-		print "start to copy $result_file";
+		print "start to copy $result_file \n";
 		#Finally we copy the folder of src.rpm to csip_folder
 		system "cp $source_rpm_folder/$result_file $csip_folder -raf"
 	    }else{

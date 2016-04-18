@@ -48,7 +48,7 @@ sub extract_file{
 	    
 	    if( /\.tar\.gz/ || /\.tar\.bz2/ ){
 		print "Start to extract archive :: $_";
-		system("cd $csip_rpm_folder/$file; tar -xvf $_ ; rm $_");	
+		system("cd $csip_rpm_folder/$file; tar -xvf $_");	
 	    }
 	    
 	    if( /\.xz/ ){
@@ -56,13 +56,12 @@ sub extract_file{
 		
 		system("cd $csip_rpm_folder/$file; xz -d $_");
 		
-		my @tar_name_list = `ls *.tar`;
+		my @tar_name_list = `cd $csip_rpm_folder/$file; ls *.tar`;
 		foreach $item (@tar_name_list){
-		    system("cd $csip_rpm_folder/$file; tar -xvf $item ; rm $item");
+		    system("cd $csip_rpm_folder/$file; tar -xvf $item");
 		}
 		
 	    }
- 
 	}
     }
 }
@@ -73,18 +72,12 @@ sub move_tailored_file{
     while( my $line = <$info>)  {
 	chomp($line);
 	my $pure_name = &get_pure_rpm_name($line);
-	
-	my $src_folder = `ls -d $csip_rpm_folder/$pure_name*`;
-	chomp($src_folder);
-	
-	if( -e "$src_folder" ){
-	    print "start to move the folder outside $src_folder\n";
+		
+	print "start to move the folder outside $csip_rpm_folder/$pure_name*\n";
 	    
-	    my $folder_base = basename($src_folder);
-	    move($src_folder, "$tailor_folder/$folder_base");
-	}else{
-	    print "can not find src folder for $src_folder \n";
-	}
+	#my $folder_base = basename($src_folder);
+	system("mv $csip_rpm_folder/$pure_name* $tailor_folder");
+	
     }
 }
 
@@ -98,23 +91,23 @@ sub get_pure_rpm_name{
     return $result_strs[0];
 }
 
-my @search_pattern=('.git','*.jpg','*.png','*.gif','*.qrc','*.src.rpm');
-my @search_folder_pattern=('tests','test','doc','upstream');
+my @search_pattern=('*.jpg','*.png','*.gif','*.qrc','*.src.rpm','*tar.bz2','*.tar.gz','*.xz','*.tar');
+#my @search_folder_pattern=('tests','test','doc','upstream','.git' );
+my @search_folder_pattern=('upstream','.git' );
 
 sub remove_non_scan_file{
     
     for $item (@search_pattern){
 	print "find $csip_rpm_folder -name '$item' \n";
-	system "find $csip_rpm_folder -name '$item' | xargs -Ixxx rm xxx";
+	system "find $csip_rpm_folder -type f -name '$item' | xargs -Ixxx rm xxx";
     }
 
     for $item (@search_folder_pattern){
 	print "find $csip_rpm_folder -name '$item' \n";
 	system "find $csip_rpm_folder -type d -name '$item' | xargs -Ixxx rm -rf xxx";
-    }    
+    }
 }
 
-#&test
+&move_tailored_file
 #&extract_file
-#&move_tailored_file
-&remove_non_scan_file
+#&remove_non_scan_file
