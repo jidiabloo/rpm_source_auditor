@@ -134,11 +134,12 @@ sub move_filtered_file{
 	
     }
 }
-#--fileterd file include: GPL package, unmodified package 
-&move_filtered_file
-
 #--the majority of tailored files are large scale opensource package  
 #&move_tailored_file
+
+
+#--fileterd file include: GPL package, unmodified package 
+#&move_filtered_file
 
 #--extract all the tar archive in csip folder
 #--remove src.rpm file in csip folder
@@ -146,4 +147,4 @@ sub move_filtered_file{
 
 
 #--remove the picture and another file which are not going to be scanned
-#&remove_non_scan_file
+&remove_non_scan_file

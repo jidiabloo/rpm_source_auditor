@@ -11,7 +11,7 @@ no if $] >= 5.017011, warnings => 'experimental::smartmatch';
 
 $csip_rpm_folder =  '/home/xji/mount_point/Source_Code_Audit/csip_rpm_folder';
 
-$csip_rpm_list = '/home/xji/mount_point/Source_Code_Audit/rpm_list.txt';
+$csip_rpm_list = '../file_list/rpm_list.txt';
 
 $source_rpm_folder = '/home/xji/mount_point/Source_Code_Audit/src_rpm_folder';
 
