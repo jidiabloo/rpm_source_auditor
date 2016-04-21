@@ -5,11 +5,8 @@ use File::Basename;
 use Data::Dumper;
 use Storable;
 
-use Spreadsheet::WriteExcel;
-use Spreadsheet::ParseExcel;
 
-
-#added by jidiablo: those two line below is added for enabling the smartmatch
+#Added by jidiablo: those two line below is added for enabling the smartmatch
 use v5.10.1;
 no if $] >= 5.017011, warnings => 'experimental::smartmatch';
 
@@ -29,7 +26,6 @@ $package_number=0;
 
 sub fetch_license_info()
 {
-    
     #Go through the source folder
     opendir my $dh, $location or die "Can not open $source_rpm_insight_folder: $!";
     
@@ -105,8 +101,8 @@ sub parse_spec_file{
 
 
 	if(/License\:/){
-	    my $index1 = rindex($_," ");
-	    my $index2 = rindex($_,"\t");
+	    my $index1 = index($_," ");
+	    my $index2 = index($_,"\t");
 	    
 	    if($index1 > $index2){
 		$name_index = $index1;
@@ -115,6 +111,8 @@ sub parse_spec_file{
 	    }
 	    
 	    $license_info = substr($_, $name_index+1);
+	    $license_info = trim($license_info);
+	    
 	    if($license_info ne ''){
 		$licenses = "$licenses : $license_info"; 
 		#print "got license info for $spec_file : $license_info\n";
@@ -125,39 +123,7 @@ sub parse_spec_file{
     }
 
     print "$pak_name :: $licenses \n";
-
-    #Excel_feed_license($pak_name, $licenses);
     close(SF);
 }
 
-
-sub Excel_feed_license{
-    
-    my $packName = $_[0];
-    my $license = $_[1];
-    
-    $xlsContent->write( "A".$package_number, decode( 'utf8', $packName ), $contentStyle1 );
-    $xlsContent->write( "B".$package_number, decode( 'utf8', $license ), $contentStyle2 );
-}
-
-
-$xls = Spreadsheet::WriteExcel->new( "license.xls" );
-$xlsContent = $xls->add_worksheet( 'report' );
-
-$contentStyle = $xls->add_format();
-$contentStyle->set_size( 11 );
-$contentStyle->set_bold();
-$contentStyle->set_align('center');
-$contentStyle->set_text_wrap();
-$contentStyle->set_color('black');
-    
-$contentStyle2 = $xls->add_format();
-$contentStyle2->set_size( 11 );
-$contentStyle2->set_align('center');
-$contentStyle2->set_text_wrap();
-$contentStyle2->set_color('black');
-
-
 &fetch_license_info;
-
-$xls->close();
