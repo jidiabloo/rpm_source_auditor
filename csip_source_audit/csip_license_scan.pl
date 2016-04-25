@@ -12,6 +12,8 @@ use Data::Dumper;
 use v5.10.1;
 no if $] >= 5.017011, warnings => 'experimental::smartmatch';
 
+my $oExcel = new Spreadsheet::ParseExcel;
+
 #src.rpm from a image will be copied from this folder 
 $csip_folder = '/home/xji/mount_point/Source_Code_Audit/csip_folder';
 
@@ -89,12 +91,19 @@ sub do_generate_license_info{
 
 
 sub collect_license_summarization{
-    my $xlt_files=`cd $csip_archiving_folder; find -name "*.xlt"`;
+    my @xlt_files=`cd $csip_archiving_folder; find -name "*.xlt"`;
     
-    foreach (@xlt_files){
+
+    my $file_name="";
+    my $extension_index=0;
+    foreach (@xlt_files){	
 	print "cached an execl archive  $_\n";
-	my $execl_archive_path = "$rpm_folder/$_";
-	parse_col_num("$execl_archive_path");
+	##TODO: start to get package name which will form a hash table
+	$extension_index = rindex($_, ".src.rpm.tar.gz.xl");
+	$source_pac_name = substr($_,0,$extension_index);
+
+	my $execl_archive_path = "$csip_archiving_folder$_";
+	parse_col_num("$execl_archive_path","$source_pac_name");
     }
 }
 
@@ -102,13 +111,16 @@ sub parse_col_num(){
     
     my $excel_archive = $_[0];
     chomp $excel_archive;
+
+    my $source_package_name = $_[1];
+    chomp $source_package_name;
     
-    print("parsing file $excel_archive");
+    print("parsing file $excel_archive\n");
 
     my $oLicense = $oExcel->Parse($excel_archive);
     
     #contains all the licenses in one source package
-    my @license_list = ( );
+    my @license_list = ();
 
     for(my $iSheet=0; $iSheet < $oLicense->{SheetCount} ; $iSheet++)
     {
@@ -133,7 +145,6 @@ sub parse_col_num(){
 			if ($licence_info ~~ @license_list){   
 			    #print "skip push : ";
 			}else{
-			    print "doing push : ", $licence_info;
 			    push(@license_list, $licence_info);
 			}
 		    }
@@ -141,12 +152,10 @@ sub parse_col_num(){
 	    }
 	}
     }
-    print "Licenses List :: @license_list", "\n";
-    #feed_result(@license_list, $rpm_file_name, $count);
-    
+    print "##### Licenses List :: $source_package_name :: @license_list", "\n";
 
     #put license information into a hash map
-    $license_hash -> {$rpm_file_name} = "@license_list"; 
+    $license_hash -> {$source_package_name} = "@license_list"; 
     
 }
 
@@ -174,11 +183,10 @@ $xlsContent->write( "A1", decode( 'utf8', "RPM Source Package Name" ), $contentS
 $xlsContent->write( "B1", decode( 'utf8', "License" ), $contentStyle );
 ### excel scalar end
 
-
-#print Dumper($license_hash);
 my $row_num = 1;
 while( my ($key, $value) = each $license_hash )
 {
+    print "******";
     $row_num ++;
     my $a_row_num="A".$row_num;
     my $b_row_num="B".$row_num;
