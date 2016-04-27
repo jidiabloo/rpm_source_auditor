@@ -125,13 +125,10 @@ sub move_filtered_file{
 	#print "the file type is |$file_type| \n ";
 	#print "the file name is $file_name \n";
 	
-	if( $file_type eq " directory"){	
-	    
+	if( $file_type eq " directory"){
 	    print "cached a new directory:  $file_name \n";	
 	    system("mv $csip_rpm_folder/$file_name $tailor_folder");
-	}
-	
-	
+	}	
     }
 }
 

@@ -18,7 +18,7 @@ my $oExcel = new Spreadsheet::ParseExcel;
 $csip_folder = '/home/xji/mount_point/Source_Code_Audit/server_src';
 
 #License scanning will occured in this folder
-$csip_archiving_folder = '/home/xji/mount_point/Source_Code_Audit/server_source_archives';
+$csip_archiving_folder = '/home/xji/mount_point/Source_Code_Audit/server_source_archives/';
 
 #License scanner
 $license_parser = '/home/xji/opt/ninka/ninka-excel.pl';
@@ -142,7 +142,7 @@ sub parse_col_num(){
 		    if ($licence_info eq "Licenses" || $licence_info eq "NONE" || $licence_info eq "Binary File" || $licence_info eq "UNKNOWN" || $licence_info eq "SeeFile"){
 			#&feed_result($oWkC->Value);
 		    }else{
-			if ($licence_info ~~ @license_list){   
+			if ($licence_info ~~ @license_list){
 			    #print "skip push : ";
 			}else{
 			    push(@license_list, $licence_info);
@@ -203,8 +203,8 @@ $xls->close();
 #&archive_sources
 
 #--then start to genrate summarization of license information
-&scan_license
+#&scan_license
 
 #--finally we start to put all summarization together
-#&collect_license_summarization
-#&feed_result
+&collect_license_summarization
+&feed_result

@@ -18,7 +18,10 @@ sub tailor_sop_content(){
 
 sub tailor_server_pac(){
     ##TODO: remove all framework folder
-    system("cd $server_pac_workspace; find -name 'framework' -type -d | xargs -Ixxx rm -rf xxx");
+    system("cd $server_pac_workspace; find -name 'framework' -type -d | xargs -I xxx rm -rf xxx");
+    
+    ##TODO: remove all .git folder
+    system("cd $server_pac_workspace; find -name '.git' | xargs -I xxx rm -rf xxx");
     
     ##TODO: remove hjz-web project
     system("cd $server_pac_workspace; rm -rf hjz-web");
@@ -27,8 +30,4 @@ sub tailor_server_pac(){
     system("cd $server_pac_workspace; rm -rf /eim-web/EimClient");
 }
 
-
-&tailor_server_pac(){
-    
-
-}
+&tailor_server_pac

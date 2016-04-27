@@ -14,7 +14,7 @@ no if $] >= 5.017011, warnings => 'experimental::smartmatch';
 
 my $oExcel = new Spreadsheet::ParseExcel;
 
-#src.rpm from a image will be copied from this folder 
+#src.rpm from a image will be copied from this folder
 $csip_folder = '/home/xji/mount_point/Source_Code_Audit/sop_src';
 
 #License scanning will happend in this folder
@@ -206,5 +206,5 @@ $xls->close();
 #&scan_license
 
 #--finally we start to put all summarization together
-#&collect_license_summarization
-#&feed_result
+&collect_license_summarization
+&feed_result
