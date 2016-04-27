@@ -140,7 +140,7 @@ sub move_filtered_file{
 #&move_filtered_file
 
 #--the majority of tailored files are large scale opensource package  
-&move_tailored_file
+#&move_tailored_file
 
 #--extract all the tar archive in csip folder
 #--remove src.rpm file in csip folder
