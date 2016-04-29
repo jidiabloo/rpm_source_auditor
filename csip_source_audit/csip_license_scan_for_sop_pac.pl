@@ -18,7 +18,7 @@ my $oExcel = new Spreadsheet::ParseExcel;
 $csip_folder = '/home/xji/mount_point/Source_Code_Audit/sop_src';
 
 #License scanning will happend in this folder
-$csip_archiving_folder = '/home/xji/mount_point/Source_Code_Audit/sop_source_archives/';
+$csip_archiving_folder = '/home/xji/mount_point/Source_Code_Audit/csip_sop_license_scan_space/';
 
 #License scanner
 $license_parser = '/home/xji/opt/ninka/ninka-excel.pl';
@@ -127,7 +127,7 @@ sub parse_col_num(){
 	$oWkS = $oLicense->{Worksheet}[$iSheet];
 	print "--------- SHEET:", $oWkS->{Name}, "\n";
 	for(my $iR = $oWkS->{MinRow} ;
-	    defined $oWkS->{MaxRow} && $iR <= $oWkS->{MaxRow} ;
+	    defined $oWkS->{MaxRow} && $iR <= $oWkS->{MaxRow};
 	    $iR++)
 	{
 	    for(my $iC = $oWkS->{MinCol} ;
@@ -142,7 +142,7 @@ sub parse_col_num(){
 		    if ($licence_info eq "Licenses" || $licence_info eq "NONE" || $licence_info eq "Binary File" || $licence_info eq "UNKNOWN" || $licence_info eq "SeeFile"){
 			#&feed_result($oWkC->Value);
 		    }else{
-			if ($licence_info ~~ @license_list){   
+			if ($licence_info ~~ @license_list){
 			    #print "skip push : ";
 			}else{
 			    push(@license_list, $licence_info);

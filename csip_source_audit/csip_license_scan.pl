@@ -18,7 +18,7 @@ my $oExcel = new Spreadsheet::ParseExcel;
 $csip_folder = '/home/xji/mount_point/Source_Code_Audit/csip_folder';
 
 #License scanning will happend in this folder
-$csip_archiving_folder = '/home/xji/mount_point/Source_Code_Audit/csip_source_archives/';
+$csip_archiving_folder = '/home/xji/mount_point/Source_Code_Audit/csip_license_scan_space/';
 
 #License scanner
 $license_parser = '/home/xji/opt/ninka/ninka-excel.pl';

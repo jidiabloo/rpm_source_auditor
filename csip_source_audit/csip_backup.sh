@@ -3,7 +3,7 @@
 shopt -s expand_aliases
 . ~/.bashrc
 
-backup_workspace="/home/xji/mount_point/CSIP_Backup"
+backup_workspace="/home/xji/mount_point/CSIP_Backup/OBS_Project/"
 
 project_list=( "syberos:/devel:/base/" "syberos:/devel:/nonbase/" "syberos:/devel:/qt/" "syberos:/devel:/mw/" "syberos:/devel:/soservice/" "syberos:/devel:/applications/" "syberos:/devel:/hw/" "syberos:/devel:/hw:/spreadtrum/" "syberos:/devel:/hw:/spreadtrum:/cactus/" )
 

@@ -131,7 +131,14 @@ sub move_filtered_file{
 	}	
     }
 }
-
+#This is a post processing, when there are some package with GPL are recognized 
+sub tailor_gpl_packages{
+    my @gpl_pac_list = ("libmms-send", "syberos-native", "confd-storage", "qmlplugin-multimedia", "ca-certificates", "walt");
+    foreach $pac_name (@gpl_pac_list){
+	print("$pac_name \n");
+	system("mv $csip_rpm_folder/$pac_name* /home/xji/mount_point/Source_Code_Audit/GPL_tailoring");
+    }    
+}
 
 #--fileterd file include: GPL package, unmodified package 
 #&move_filtered_file
@@ -143,6 +150,9 @@ sub move_filtered_file{
 #--remove src.rpm file in csip folder
 #&extract_file
 
-
 #--remove the picture and another file which are not going to be scanned
 #&remove_non_scan_file
+
+#--post process tailoing:  after the license review, there might be more packageneed to be removed which are in unacceptable license 
+&tailor_gpl_packages
+
