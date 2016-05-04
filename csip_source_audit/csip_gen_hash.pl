@@ -8,6 +8,8 @@ use Storable;
 use v5.10.1;
 no if $] >= 5.017011, warnings => 'experimental::smartmatch';
 
+#This scriptlet will generate a hash which reflect the relationship between source rpm and binary rpm
+
 
 #$target_rpm_insight_folder = '/home/xji/Source_Code_Audit/rpm_insight_target';
 #$source_rpm_insight_folder = '/home/xji/Source_Code_Audit/rpm_insight';
